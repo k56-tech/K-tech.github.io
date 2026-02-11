@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allxpolon</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #0a0000 0%, black 80%);
+    font-family: 'Courier New', monospace;
+    color: white;
+    overflow: hidden;
+}
+
+/* Arka plan animasyonu */
+@keyframes backgroundShift {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-radial-gradient(circle at center, #200000 0%, #000 50%);
+    background-size: 200% 200%;
+    animation: backgroundShift 15s infinite alternate;
+    z-index: -2;
+}
+
+/* Container */
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    animation: pulseText 3s infinite alternate;
+}
+
+/* Başlık */
+h1 {
+    font-size: 50px;
+    color: #ff0000;
+    text-shadow: 0 0 30px red, 0 0 60px crimson;
+    margin-bottom: 15px;
+    animation: shake 1.5s infinite;
+}
+
+/* Glitch efekti */
+@keyframes shake {
+    0% { transform: translate(0,0); }
+    20% { transform: translate(-3px,2px); }
+    40% { transform: translate(2px,-2px); }
+    60% { transform: translate(-2px,2px); }
+    80% { transform: translate(2px,-1px); }
+    100% { transform: translate(0,0); }
+}
+
+.hacked {
+    font-size: 20px;
+    color: crimson;
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px crimson;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 0 red, -2px 2px blue; }
+    20% { text-shadow: -2px 2px red, 2px -2px cyan; }
+    40% { text-shadow: 2px -2px crimson, -2px 2px blue; }
+    60% { text-shadow: -2px 0 red, 2px 2px cyan; }
+    80% { text-shadow: 2px 2px crimson, -2px -2px blue; }
+    100% { text-shadow: -2px 2px red, 2px -2px crimson; }
+}
+
+/* Sosyal linkler */
+.links {
+    margin: 20px 0;
+    font-size: 18px;
+    color: red;
+    text-shadow: 0 0 15px red;
+    line-height: 35px;
+}
+
+.links div:hover {
+    color: white;
+    text-shadow: 0 0 25px crimson;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Uyarı alanı */
+.warning {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #ccc;
+    max-width: 700px;
+    line-height: 1.5;
+    text-shadow: 0 0 5px red;
+}
+
+/* İmza alanı */
+.signature {
+    margin-top: 40px;
+    font-size: 28px;
+    color: crimson;
+    text-shadow: 0 0 20px crimson;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+/* Yeni eklenen yazı */
+.taken {
+    margin-top: 30px;
+    font-size: 22px;
+    color: orange;
+    text-shadow: 0 0 15px orange, 0 0 30px red;
+    animation: flicker 1.5s infinite;
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+    20%, 22%, 24%, 55% { opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>ALLXPOLONA KAFA TUTULAMAZ</h1>
+
+    <div class="hacked">
+        h4cked by: allxpolon <br>
+        kafa tutmadan önce 2 kez düşünün
+    </div>
+
+    <div class="links">
+        <div>İg.allxpolon_ebediafk</div>
+        <div>Allxpolon.gt.ops</div>
+        <div>Yeni yetmelere taviz yok</div>
+    </div>
+
+    <div class="warning">
+        no nameler siteye bakanlıkla kapatmak olmaz, oyun oynuyorsunuz ama yiyemeyeceginiz y4r4n altına yatıyorsunuz.
+    </div>
+
+    <div class="taken">
+        K56n'ın sitesi <strong>allxpolon</strong> tarafından alınmıştır ve <strong>h4ck7lenmiştir</strong>
+    </div>
+
+    <div class="signature">
+        Allxpolon Farkı
+    </div>
+</div>
+
+</body>
+</html>
