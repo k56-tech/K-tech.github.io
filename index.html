@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allxpolon</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    color: white;
+}
+
+/* Arka plan */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #1a0000 0%, black 70%);
+    animation: pulse 5s infinite alternate;
+    z-index: -2;
+}
+
+@keyframes pulse {
+    from { opacity: 0.8; }
+    to { opacity: 1; }
+}
+
+.container {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1 {
+    font-size: 40px;
+    color: red;
+    text-shadow: 0 0 20px red;
+    margin-bottom: 10px;
+}
+
+.hacked {
+    font-size: 18px;
+    color: crimson;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px crimson;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 0 red; }
+    20% { text-shadow: -2px 0 blue; }
+    40% { text-shadow: 2px 2px red; }
+    60% { text-shadow: -2px -2px blue; }
+    80% { text-shadow: 2px -2px crimson; }
+    100% { text-shadow: -2px 2px red; }
+}
+
+/* Yeni eklenen sosyal alan */
+.links {
+    margin: 20px 0;
+    font-size: 18px;
+    color: red;
+    text-shadow: 0 0 10px red;
+    line-height: 35px;
+}
+
+.links div:hover {
+    color: white;
+    text-shadow: 0 0 20px crimson;
+    transition: 0.3s;
+}
+
+.warning {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #ccc;
+    max-width: 600px;
+}
+
+.signature {
+    margin-top: 40px;
+    font-size: 28px;
+    color: crimson;
+    text-shadow: 0 0 15px crimson;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>ALLXPOLONA KAFA TUTULAMAZ</h1>
+
+    <div class="hacked">
+        h4cked by: allxpolon <br>
+        kafa tutmadan önce 2 kez düşünün
+    </div>
+
+    <div class="links">
+        <div>İg.allxpolon_ebediafk</div>
+        <div>Allxpolon.gt.ops</div>
+        <div>Yeni yetmelere taviz yok</div>
+    </div>
+
+    <div class="warning">
+        no nameler siteye bakanlıkla kapatmak olmaz oyun oynuyorsunuz ama yiyemeyeceginiz y4r4n altına yatıyorsunuz.
+    </div>
+
+    <div class="signature">
+        Allxpolon Farkı
+    </div>
+</div>
+
+</body>
+</html>
