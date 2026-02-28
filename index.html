@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Allxpolon Fotoğraf</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .photo-container {
+            position: relative;
+            display: inline-block;
+        }
+        .photo-container img {
+            max-width: 500px;
+            height: auto;
+            display: block;
+        }
+        .photo-container .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px black;
+        }
+    </style>
+</head>
+<body>
+    <div class="photo-container">
+        <img src="fotograf.jpg" alt="Fotoğraf">
+        <div class="text-overlay">allxpolon</div>
+    </div>
+</body>
+</html>
