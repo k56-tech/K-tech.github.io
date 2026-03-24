@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALLXPOLON</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:red;
+    font-family:Arial;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* LOADER */
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+}
+
+/* MATRIX */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* TITLE */
+.title{
+font-size:65px;
+margin-top:80px;
+letter-spacing:10px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-shadow:0 0 15px red,0 0 30px red;
+animation:glitch 1s infinite;
+}
+
+@keyframes glitch{
+0%{transform:skew(0deg);}
+50%{transform:skew(2deg);}
+100%{transform:skew(0deg);}
+}
+
+/* LOGO */
+.logo{
+width:70px;
+margin-right:15px;
+filter:drop-shadow(0 0 10px red);
+animation:spin 6s linear infinite;
+}
+@keyframes spin{
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
+}
+
+/* BUTTON */
+.btn{
+margin-top:40px;
+padding:15px 40px;
+border:2px solid red;
+cursor:pointer;
+box-shadow:0 0 10px red;
+}
+.btn:hover{
+background:red;
+color:black;
+box-shadow:0 0 20px red;
+}
+
+/* MENU */
+.menu{display:none;}
+.menu a{
+display:block;
+margin:15px auto;
+width:250px;
+padding:15px;
+border:2px solid red;
+color:red;
+text-decoration:none;
+}
+.menu a:hover{
+background:red;
+color:black;
+}
+
+/* TERMINAL */
+#terminal{
+margin-top:20px;
+color:lime;
+font-family:monospace;
+}
+
+/* LOGIN PANEL */
+#login{
+display:none;
+margin-top:20px;
+}
+input{
+padding:10px;
+margin:5px;
+background:black;
+border:1px solid red;
+color:red;
+}
+
+/* DASHBOARD */
+#panel{
+display:none;
+margin-top:20px;
+color:lime;
+}
+
+/* CURSOR */
+#cursor{
+position:fixed;
+width:10px;
+height:10px;
+background:cyan;
+border-radius:50%;
+pointer-events:none;
+box-shadow:0 0 15px cyan;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+<h2>LOADING...</h2>
+<div id="load">0%</div>
+</div>
+
+<canvas id="matrix"></canvas>
+
+<div class="title">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Kali-dragon-icon.svg" class="logo">
+ALLXPOLON
+</div>
+
+<div id="typing"></div>
+
+<div class="btn" onclick="startSite()">SİTEYE GİRİŞ</div>
+
+<div class="menu" id="menu">
+<a href="#">INSTAGRAM</a>
+<a href="#">WHATSAPP</a>
+</div>
+
+<div id="terminal"></div>
+
+<!-- LOGIN -->
+<div id="login">
+<input placeholder="username">
+<input placeholder="password" type="password">
+<div class="btn" onclick="openPanel()">LOGIN</div>
+</div>
+
+<!-- PANEL -->
+<div id="panel">
+<h3>SYSTEM CONTROL PANEL</h3>
+<p>IP CONNECTED...</p>
+<p>ACCESS LEVEL: ROOT</p>
+<p>SYSTEM STATUS: ONLINE</p>
+</div>
+
+<!-- SES -->
+<audio id="bgm" loop>
+<source src="organize-moncler.mp3">
+</audio>
+
+<audio id="click">
+<source src="https://www.soundjay.com/buttons/button-3.mp3">
+</audio>
+
+<div id="cursor"></div>
+
+<script>
+
+/* LOADER */
+let p=0;
+let loadInt=setInterval(()=>{
+p++;
+document.getElementById("load").innerText=p+"%";
+if(p>=100){
+clearInterval(loadInt);
+document.getElementById("loader").style.display="none";
+}
+},20);
+
+/* TYPING */
+let txt="ZİRVE";
+let i=0;
+function type(){
+if(i<txt.length){
+document.getElementById("typing").innerHTML+=txt[i];
+i++;
+setTimeout(type,150);
+}}
+type();
+
+/* START */
+function startSite(){
+document.getElementById("click").play();
+document.getElementById("bgm").play();
+document.querySelector(".btn").style.display="none";
+document.getElementById("menu").style.display="block";
+terminal();
+setTimeout(()=>{document.getElementById("login").style.display="block";},2000);
+}
+
+/* TERMINAL */
+function terminal(){
+let t=document.getElementById("terminal");
+let lines=[
+"> initializing...",
+"> bypassing security...",
+"> access granted",
+"> welcome ALLXPOLON"
+];
+let i=0;
+function write(){
+if(i<lines.length){
+t.innerHTML+=lines[i]+"<br>";
+i++;
+setTimeout(write,500);
+}}
+write();
+}
+
+/* LOGIN */
+function openPanel(){
+document.getElementById("login").style.display="none";
+document.getElementById("panel").style.display="block";
+}
+
+/* MATRIX */
+let c=document.getElementById("matrix");
+let ctx=c.getContext("2d");
+c.height=window.innerHeight;
+c.width=window.innerWidth;
+
+let letters="01";
+let fontSize=14;
+let columns=c.width/fontSize;
+let drops=[];
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,c.width,c.height);
+
+for(let i=0;i<drops.length;i++){
+ctx.fillStyle=Math.random()>0.5?"red":"lime";
+ctx.fillText(letters[Math.floor(Math.random()*2)],i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>c.height && Math.random()>0.975) drops[i]=0;
+drops[i]++;
+}}
+setInterval(draw,33);
+
+/* CURSOR */
+document.addEventListener("mousemove",e=>{
+document.getElementById("cursor").style.transform=
+`translate(${e.clientX}px,${e.clientY}px)`;
+});
+
+/* EASTER */
+let buf="";
+document.addEventListener("keydown",e=>{
+buf+=e.key;
+if(buf.includes("hack")){
+alert("ACCESS GRANTED 😈");
+buf="";
+}
+});
+
+</script>
+</body>
+</html>
