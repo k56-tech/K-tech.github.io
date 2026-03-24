@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALLXPOLON</title>
+
+<style>
+/* GENEL */
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: red;
+    text-align: center;
+}
+
+/* Matrix canvas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* Başlık + Neon + Glitch + Logo */
+.title {
+    font-size: 60px;
+    margin-top: 80px;
+    letter-spacing: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 2px red; }
+    50% { text-shadow: -2px -2px red; }
+    100% { text-shadow: 2px -2px red; }
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+    vertical-align: middle;
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.subtitle {
+    font-size: 18px;
+    letter-spacing: 5px;
+}
+
+/* Buton */
+.btn {
+    margin-top: 40px;
+    padding: 15px 40px;
+    border: 2px solid red;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: red;
+    color: black;
+    animation: hoverGlitch 0.3s infinite;
+}
+
+@keyframes hoverGlitch {
+    0% { text-shadow: 2px 2px red; }
+    50% { text-shadow: -2px -2px red; }
+    100% { text-shadow: 2px -2px red; }
+}
+
+/* Menü */
+.menu {
+    display: none;
+    margin-top: 40px;
+}
+
+.menu a {
+    display: block;
+    margin: 15px auto;
+    width: 250px;
+    padding: 15px;
+    border: 2px solid red;
+    color: red;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background: red;
+    color: black;
+    animation: hoverGlitch 0.3s infinite;
+}
+
+/* Footer */
+.footer {
+    margin-top: 60px;
+    font-size: 16px;
+}
+
+/* Gece/Gündüz modu */
+body.day-mode {
+    background: white;
+    color: black;
+}
+
+body.day-mode .btn, body.day-mode .menu a {
+    border-color: black;
+    color: black;
+}
+
+body.day-mode .btn:hover, body.day-mode .menu a:hover {
+    background: black;
+    color: white;
+}
+
+/* Saat */
+#clock {
+    font-size: 18px;
+    margin-top: 20px;
+    letter-spacing: 2px;
+}
+
+/* Neon fare ışığı */
+#cursor-light {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 0 20px 5px cyan;
+    transition: transform 0.05s ease;
+}
+</style>
+
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="title">
+    <img src="https://www.kali.org/images/kali-logo.svg" alt="Kali Linux" class="logo">
+    ALLXPOLON
+</div>
+<div class="subtitle">ZİRVE</div>
+
+<div class="btn" onclick="giris()">SİTEYE GİRİŞ</div>
+
+<div class="menu" id="menu">
+    <a href="https://instagram.com/allxpolon_ebediafk" target="_blank">INSTAGRAM</a>
+    <a href="https://wa.me/254775785714" target="_blank">WHATSAPP</a>
+</div>
+
+<div class="footer">لا غالب إلا الله</div>
+
+<div id="clock"></div>
+
+<!-- Müzik -->
+<audio id="bgm" autoplay loop controls style="margin-top:20px;">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Gece/Gündüz modu butonu -->
+<div class="btn" style="margin-top:20px;" onclick="toggleDayMode()">GECE/GÜNDÜZ MODU</div>
+
+<!-- Fare ışığı -->
+<div id="cursor-light"></div>
+
+<script>
+// Giriş
+function giris() {
+    document.querySelector(".btn").style.display = "none";
+    document.getElementById("menu").style.display = "block";
+}
+
+// Matrix efekti
+let canvas = document.getElementById("matrix");
+let ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+let letters = "01";
+letters = letters.split("");
+
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+
+let drops = [];
+for (let x = 0; x < columns; x++) drops[x] = 1;
+
+// Yıldızlar / Partiküller
+let stars = [];
+for (let i = 0; i < 100; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2,
+        speed: Math.random() * 1.5
+    });
+}
+
+function draw() {
+    // Matrix efekti
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    
+    // Harfler
+    for(let i=0;i<drops.length;i++){
+        let color = Math.random() > 0.5 ? "red" : "lime";
+        ctx.fillStyle = color;
+        ctx.font = fontSize + "px monospace";
+        let text = letters[Math.floor(Math.random()*letters.length)];
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+
+        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i]=0;
+        drops[i]++;
+    }
+
+    // Yıldızlar
+    ctx.fillStyle = "white";
+    stars.forEach(s=>{
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+        ctx.fill();
+        s.y += s.speed;
+        if(s.y>canvas.height){ s.y=0; s.x=Math.random()*canvas.width; }
+    });
+}
+
+setInterval(draw,33);
+
+// Gece/Gündüz modu
+function toggleDayMode() {
+    document.body.classList.toggle("day-mode");
+}
+
+// Saat
+function updateClock() {
+    let now = new Date();
+    let time = now.getHours().toString().padStart(2,'0') + ':' +
+               now.getMinutes().toString().padStart(2,'0') + ':' +
+               now.getSeconds().toString().padStart(2,'0');
+    document.getElementById("clock").innerText = time;
+}
+setInterval(updateClock,1000);
+updateClock();
+
+// Fare takip ışığı
+let cursorLight = document.getElementById("cursor-light");
+document.addEventListener("mousemove", e=>{
+    cursorLight.style.transform = `translate(${e.clientX-7.5}px, ${e.clientY-7.5}px)`;
+});
+</script>
+
+</body>
+</html>
