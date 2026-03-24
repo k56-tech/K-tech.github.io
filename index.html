@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALLXPOLON</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    color: red;
+    text-align: center;
+}
+
+/* Loading Screen */
+#loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+/* Matrix */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* Title */
+.title {
+    font-size: 60px;
+    margin-top: 80px;
+    letter-spacing: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 2px 2px red; }
+    50% { text-shadow: -2px -2px red; }
+    100% { text-shadow: 2px -2px red; }
+}
+
+.logo {
+    width: 50px;
+    margin-right: 15px;
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Typing */
+#typing {
+    font-size: 18px;
+    letter-spacing: 5px;
+}
+
+/* Button */
+.btn {
+    margin-top: 40px;
+    padding: 15px 40px;
+    border: 2px solid red;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: red;
+    color: black;
+}
+
+/* Menu */
+.menu { display: none; }
+
+.menu a {
+    display: block;
+    margin: 15px auto;
+    width: 250px;
+    padding: 15px;
+    border: 2px solid red;
+    color: red;
+    text-decoration: none;
+}
+
+/* Terminal */
+#terminal {
+    display: none;
+    margin-top: 20px;
+    font-family: monospace;
+    color: lime;
+}
+
+/* Cursor light */
+#cursor-light {
+    position: fixed;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 20px cyan;
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+    <div>LOADING...</div>
+    <div id="loadbar">0%</div>
+</div>
+
+<canvas id="matrix"></canvas>
+
+<div class="title">
+<img src="https://www.kali.org/images/kali-logo.svg" class="logo">
+ALLXPOLON
+</div>
+
+<div id="typing"></div>
+
+<div class="btn" onclick="giris()">SİTEYE GİRİŞ</div>
+
+<div class="menu" id="menu">
+<a href="https://instagram.com/allxpolon_ebediafk" target="_blank">INSTAGRAM</a>
+<a href="https://wa.me/254775785714" target="_blank">WHATSAPP</a>
+</div>
+
+<div id="terminal"></div>
+
+<audio id="clickSound">
+<source src="https://www.soundjay.com/buttons/button-3.mp3">
+</audio>
+
+<audio id="bgm" autoplay loop controls>
+<source src="organize-moncler.mp3">
+</audio>
+
+<div id="cursor-light"></div>
+
+<script>
+
+/* LOADING */
+let load = 0;
+let loader = document.getElementById("loadbar");
+let interval = setInterval(()=>{
+    load++;
+    loader.innerText = load + "%";
+    if(load >= 100){
+        clearInterval(interval);
+        document.getElementById("loader").style.display="none";
+    }
+},20);
+
+/* Typing Effect */
+let text = "ZİRVE";
+let i = 0;
+function typing(){
+    if(i < text.length){
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing,150);
+    }
+}
+typing();
+
+/* Giriş */
+function giris(){
+    document.getElementById("clickSound").play();
+    document.querySelector(".btn").style.display="none";
+    document.getElementById("menu").style.display="block";
+    startTerminal();
+}
+
+/* Terminal */
+function startTerminal(){
+    let term = document.getElementById("terminal");
+    term.style.display="block";
+    let lines = [
+        "> system loading...",
+        "> access granted",
+        "> welcome ALLXPOLON"
+    ];
+    let i = 0;
+    function write(){
+        if(i < lines.length){
+            term.innerHTML += lines[i] + "<br>";
+            i++;
+            setTimeout(write,500);
+        }
+    }
+    write();
+}
+
+/* Matrix */
+let canvas = document.getElementById("matrix");
+let ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+let letters = "01".split("");
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+let drops = [];
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    for(let i=0;i<drops.length;i++){
+        ctx.fillStyle = Math.random()>0.5?"red":"lime";
+        let text = letters[Math.floor(Math.random()*letters.length)];
+        ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+        if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+        drops[i]++;
+    }
+}
+setInterval(draw,33);
+
+/* Cursor Light */
+document.addEventListener("mousemove", e=>{
+    document.getElementById("cursor-light").style.transform =
+    `translate(${e.clientX}px,${e.clientY}px)`;
+});
+
+/* Easter Egg */
+let buffer = "";
+document.addEventListener("keydown", e=>{
+    buffer += e.key;
+    if(buffer.includes("hack")){
+        alert("ACCESS GRANTED 😈");
+        buffer="";
+    }
+});
+
+</script>
+</body>
+</html>
